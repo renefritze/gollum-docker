@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  gollum:
+    build:
+      # image: gollum
+      context: gollum/
+      args:
+        GOLLUM_USER_ID: ${GOLLUM_USER_ID}
+        GOLLUM_GROUP_ID: ${GOLLUM_GROUP_ID}
+    volumes:
+      - ./repo:/repo
