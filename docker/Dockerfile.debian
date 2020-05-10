@@ -10,7 +10,8 @@ RUN apt update -qq && \
     apt dist-upgrade -y && \
     apt-get install -q=100 -y --no-install-recommends ${BUILD_DEPS} ruby git rake && \
     gem install --no-document --version ${GOLLUM_VERSION} gollum && \
-    gem install --no-document json && \
+    gem install --no-document json gollum-auth thin
+RUN \
     apt purge -y ${BUILD_DEPS} && \
     rm -rf /root/* /tmp/* /usr/share/man /var/lib/apt/lists && \
     addgroup --gid ${GOLLUM_GROUP_ID} gollum && \
@@ -19,5 +20,5 @@ RUN apt update -qq && \
 USER gollum
 WORKDIR /repo
 VOLUME /repo
-EXPOSE 4567
-CMD ["/usr/local/bin/gollum"]
+EXPOSE 9292
+CMD ["/usr/local/bin/rackup", "--host", "0.0.0.0", "-w", "/app/config.ru"]

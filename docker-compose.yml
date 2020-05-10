@@ -4,7 +4,7 @@ services:
   gollum:
     build:
       # image: gollum
-      context: gollum/
+      context: docker/
       dockerfile: Dockerfile.debian
       args:
         GOLLUM_USER_ID: ${GOLLUM_USER_ID}
@@ -12,5 +12,6 @@ services:
         GOLLUM_VERSION: ${GOLLUM_VERSION}
     volumes:
       - ./repo:/repo
+      - ./app:/app
     ports:
-      - ${GOLLUM_WORLD_PORT}:4567
+      - ${GOLLUM_WORLD_PORT}:9292
