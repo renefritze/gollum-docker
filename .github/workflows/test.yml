@@ -1,0 +1,13 @@
+name: Docker Compose Actions Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup config
+        run: cp .env{.example,} && cp app/config.ru{.example,}
+      - name: Build the stack
+        run: docker-compose up --build -d
+      - name: Test
+        run: docker run --network container:gollum appropriate/curl -s --retry 10 --retry-connrefused http://localhost:80/
