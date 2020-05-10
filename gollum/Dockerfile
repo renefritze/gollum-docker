@@ -10,13 +10,13 @@ RUN apk update && \
     apk add --update --no-cache --virtual .build-deps cmake ruby-dev ruby-rdoc \
         libffi-dev build-base git zlib-dev icu-dev openssl-dev && \
     gem install --no-document --version ${GOLLUM_VERSION} gollum && \
+    gem install --no-document json && \
     apk del .build-deps && \
     rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* && \
     addgroup -g ${GOLLUM_GROUP_ID} -S gollum && \
     adduser -u ${GOLLUM_USER_ID} -S gollum -G gollum
 
 USER gollum
-
 WORKDIR /repo
 VOLUME /repo
 EXPOSE 4567

@@ -1,0 +1,23 @@
+FROM debian:buster-slim
+
+ARG GOLLUM_USER_ID=1000
+ARG GOLLUM_GROUP_ID=1000
+ARG GOLLUM_VERSION=5.0.1
+
+ENV BUILD_DEPS="cmake ruby-dev libffi-dev build-essential pkg-config libz-dev libicu-dev libssl-dev"
+
+RUN apt update -qq && \
+    apt dist-upgrade -y && \
+    apt-get install -q=100 -y --no-install-recommends ${BUILD_DEPS} ruby git rake && \
+    gem install --no-document --version ${GOLLUM_VERSION} gollum && \
+    gem install --no-document json && \
+    apt purge -y ${BUILD_DEPS} && \
+    rm -rf /root/* /tmp/* /usr/share/man /var/lib/apt/lists && \
+    addgroup --gid ${GOLLUM_GROUP_ID} gollum && \
+    adduser -u ${GOLLUM_USER_ID} --ingroup gollum gollum
+
+USER gollum
+WORKDIR /repo
+VOLUME /repo
+EXPOSE 4567
+CMD ["/usr/local/bin/gollum"]
