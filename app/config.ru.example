@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# auth config example via https://github.com/bjoernalbers/gollum-auth
+
 require 'rubygems'
 require 'gollum/auth' # Don't forget to load the gem!
 require 'gollum/app'
@@ -24,14 +26,14 @@ users = YAML.load %q{
 }
 
 # Allow unauthenticated users to read the wiki (disabled by default).
-options = { allow_unauthenticated_readonly: false }
+options = { allow_unauthenticated_readonly: true }
 
 # Allow only authenticated users to change the wiki.
 # (NOTE: This must be loaded *before* Precious::App!)
 use Gollum::Auth, users, options
 
 # That's it. The rest is for gollum only.
-gollum_path = File.expand_path(File.dirname(__FILE__)) # CHANGE THIS TO POINT TO YOUR OWN WIKI REPO
+gollum_path = "/repo"
 wiki_options = {:universal_toc => false}
 Precious::App.set(:gollum_path, gollum_path)
 Precious::App.set(:wiki_options, wiki_options)

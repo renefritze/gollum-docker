@@ -8,10 +8,9 @@ ENV BUILD_DEPS="cmake ruby-dev libffi-dev build-essential pkg-config libz-dev li
 
 RUN apt update -qq && \
     apt dist-upgrade -y && \
-    apt-get install -q=100 -y --no-install-recommends ${BUILD_DEPS} ruby git rake && \
+    apt-get install -q=100 -y --no-install-recommends ${BUILD_DEPS} nodejs ruby git rake && \
     gem install --no-document --version ${GOLLUM_VERSION} gollum && \
-    gem install --no-document json gollum-auth thin
-RUN \
+    gem install --no-document json gollum-auth thin && \
     apt purge -y ${BUILD_DEPS} && \
     rm -rf /root/* /tmp/* /usr/share/man /var/lib/apt/lists && \
     addgroup --gid ${GOLLUM_GROUP_ID} gollum && \
