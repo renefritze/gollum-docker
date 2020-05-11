@@ -3,7 +3,6 @@ version: '3'
 services:
   gollum:
     build:
-      # image: gollum
       context: docker/
       dockerfile: Dockerfile.debian
       args:
@@ -15,3 +14,4 @@ services:
       - ./app:/app
     ports:
       - ${GOLLUM_WORLD_PORT}:9292
+    restart: unless-stopped

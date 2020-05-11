@@ -20,4 +20,4 @@ USER gollum
 WORKDIR /repo
 VOLUME /repo
 EXPOSE 9292
-CMD ["/usr/local/bin/rackup", "--host", "0.0.0.0", "-w", "/app/config.ru"]
+CMD ["/usr/local/bin/rackup", "--host", "0.0.0.0", "/app/config.ru"]
